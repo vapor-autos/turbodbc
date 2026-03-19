@@ -1,10 +1,6 @@
 from opendbc.car import Bus, CarSpecs, PlatformConfig, Platforms
-from opendbc.car.structs import CarParams
 from opendbc.car.docs_definitions import CarDocs, SupportType
-from opendbc.car.fw_query_definitions import FwQueryConfig, Request, StdQueries
 from opendbc.car.lateral import AngleSteeringLimits
-
-Ecu = CarParams.Ecu
 
 TYPHON_1_8_3S_SPECS = CarSpecs(
   mass=9,
@@ -26,15 +22,5 @@ class CAR(Platforms):
     TYPHON_1_8_3S_SPECS,
     {Bus.main: 'turbo_rc_car'},
   )
-
-FW_QUERY_CONFIG = FwQueryConfig(
-  requests=[
-    Request(
-      [StdQueries.TESTER_PRESENT_REQUEST, StdQueries.UDS_VERSION_REQUEST],
-      [StdQueries.TESTER_PRESENT_RESPONSE, StdQueries.UDS_VERSION_RESPONSE],
-      bus=1,
-    ),
-  ],
-)
 
 DBC = CAR.create_dbc_map()
