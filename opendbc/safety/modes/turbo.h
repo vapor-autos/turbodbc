@@ -20,11 +20,9 @@ static bool turbo_tx_hook(const CANPacket_t *msg) {
 
 static safety_config turbo_init(uint16_t param) {
   static RxCheck turbo_rx_checks[] = {
-    {.msg = {
-      {0x205, 1, 1, 25U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true},
-      {0x208, 1, 2, 25U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true},
-      {0x209, 1, 2, 25U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true},
-    }},
+    {.msg = {{0x205, 1, 1, 25U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true}, { 0 }, { 0 }}},
+    {.msg = {{0x208, 1, 2, 25U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true}, { 0 }, { 0 }}},
+    {.msg = {{0x209, 1, 2, 25U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true}, { 0 }, { 0 }}},
   };
 
   static const CanMsg TURBO_TX_MSGS[] = {
