@@ -1,0 +1,10 @@
+VERSION "0.0.01"
+
+BO_ 514 STEER_CMD: 2 XXX
+  SG_ STEER_ANGLE : 0|16@1+ (1,0) [60|120] "degrees" Vector__XXX
+
+BO_ 515 THROTTLE_CMD: 2 XXX
+  SG_ THROTTLE : 0|16@1+ (1,0) [0|100] "percent" Vector__XXX
+
+BO_ 516 TOGGLE_HEADLIGHTS: 2 XXX
+  SG_ HEADLIGHTS_TOGGLE : 0|8@1+ (1,0) [0|1] "" Vector__XXX
