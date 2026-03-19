@@ -46,7 +46,7 @@ class PandaRunner(AbstractContextManager):
     return cs
 
   def write(self, cc: CarControl) -> None:
-    if cc.enabled and not self.p.health()['controls_allowed']:
+    if cc.enabled and not self.CI.CP.notCar and not self.p.health()['controls_allowed']:
       # prevent the car from faulting. print a warning?
       cc = CarControl(enabled=False)
     _, can_sends = self.CI.apply(cc)
