@@ -27,7 +27,11 @@ class TestTurbo(common.SafetyTest):
 
   def test_rx_hook(self):
     self.assertFalse(self.safety.get_controls_allowed())
-    self.assertTrue(self._rx(common.make_msg(1, 0x265, 8)))
+    self.assertTrue(self._rx(common.make_msg(1, 0x205, 1)))
+    self.safety.set_controls_allowed(False)
+    self.assertTrue(self._rx(common.make_msg(1, 0x208, 2)))
+    self.safety.set_controls_allowed(False)
+    self.assertTrue(self._rx(common.make_msg(1, 0x209, 2)))
     self.assertTrue(self.safety.get_controls_allowed())
 
   def test_tx_hook_whitelisted(self):

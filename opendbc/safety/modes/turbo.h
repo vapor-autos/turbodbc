@@ -3,7 +3,7 @@
 #include "opendbc/safety/declarations.h"
 
 static void turbo_rx_hook(const CANPacket_t *msg) {
-  if (msg->addr == 0x265U) {
+  if (msg->addr == 0x205U || msg->addr == 0x208U || msg->addr == 0x209U) {
     controls_allowed = true;
   }
 }
@@ -20,7 +20,11 @@ static bool turbo_tx_hook(const CANPacket_t *msg) {
 
 static safety_config turbo_init(uint16_t param) {
   static RxCheck turbo_rx_checks[] = {
-    {.msg = {{0x265, 1, 8, 100U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true}, { 0 }, { 0 }}},
+    {.msg = {
+      {0x205, 1, 1, 25U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true},
+      {0x208, 1, 2, 25U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true},
+      {0x209, 1, 2, 25U, .ignore_checksum = true, .ignore_counter = true, .ignore_quality_flag = true},
+    }},
   };
 
   static const CanMsg TURBO_TX_MSGS[] = {
