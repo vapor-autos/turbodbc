@@ -9,7 +9,7 @@ class CarController(CarControllerBase):
     self.packer = CANPacker(dbc_names[Bus.main])
 
   def update(self, CC, CS, now_nanos):
-    new_actuators = CC.actuators.as_builder()
+    new_actuators = CC.actuators
     can_sends = []
 
     if CC.enabled:
