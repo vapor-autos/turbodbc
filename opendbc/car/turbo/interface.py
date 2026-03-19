@@ -1,6 +1,6 @@
 import math
 
-from opendbc.car import structs
+from opendbc.car import get_safety_config, structs
 from opendbc.car.interfaces import CarInterfaceBase
 from opendbc.car.turbo.carcontroller import CarController
 from opendbc.car.turbo.carstate import CarState
@@ -14,6 +14,7 @@ class CarInterface(CarInterfaceBase):
   def _get_params(ret: structs.CarParams, candidate, fingerprint, car_fw, alpha_long, is_release, docs) -> structs.CarParams:
     ret.notCar = True
     ret.brand = "turbo"
+    ret.safetyConfigs = [get_safety_config(structs.CarParams.SafetyModel.turbo)]
 
     ret.minSteerSpeed = -math.inf
     ret.maxLateralAccel = math.inf
