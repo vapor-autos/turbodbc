@@ -83,7 +83,7 @@ def joystick_thread(joystick):
 def main(joystick):
   threading.Thread(target=joystick_thread, args=(joystick,), daemon=True).start()
   with PandaRunner() as p:
-    CC = CarControl(enabled=False)
+    CC = CarControl(enabled=True)
     while True:
       CC.actuators.accel = float(4.0*np.clip(joystick.axes_values['gb'], -1, 1))
       CC.actuators.torque = float(np.clip(joystick.axes_values['steer'], -1, 1))
