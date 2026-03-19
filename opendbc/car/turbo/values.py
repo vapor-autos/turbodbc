@@ -6,6 +6,11 @@ from opendbc.car.lateral import AngleSteeringLimits
 
 Ecu = CarParams.Ecu
 
+TYPHON_1_8_3S_SPECS = CarSpecs(
+  mass=9,
+  wheelbase=0.3302,
+  steerRatio=180 / 30 * 3,
+)
 
 class CarControllerParams:
   ANGLE_LIMITS: AngleSteeringLimits = AngleSteeringLimits(
@@ -15,14 +20,12 @@ class CarControllerParams:
   )
   STEER_STEP = 2
 
-
 class CAR(Platforms):
   TURBO_RC_CAR = PlatformConfig(
     [CarDocs("turbo rc car", package="All", support_type=SupportType.CUSTOM, support_link="#community")],
-    CarSpecs(mass=9, wheelbase=0.3302, steerRatio=180 / 30 * 3),
+    TYPHON_1_8_3S_SPECS,
     {Bus.main: 'turbo_rc_car'},
   )
-
 
 FW_QUERY_CONFIG = FwQueryConfig(
   requests=[
