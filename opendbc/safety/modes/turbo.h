@@ -11,7 +11,9 @@ static void turbo_rx_hook(const CANPacket_t *msg) {
 static bool turbo_tx_hook(const CANPacket_t *msg) {
   SAFETY_UNUSED(msg);
 
-  // Legacy turbo behavior: always allow whitelisted tx and force engagement.
+  // By design for RC operation: controls are always allowed so teleop and
+  // self-drive can hand off without a separate engage gate.
+  // This intentionally differs from normal on-road safety semantics.
   controls_allowed = true;
   return true;
 }
