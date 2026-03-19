@@ -88,6 +88,8 @@ def main(joystick):
   with PandaRunner() as p:
     CC = CarControl(enabled=True)
     while True:
+      CC.latActive = True
+      CC.longActive = True
       CC.actuators.accel = float(TURBO_ACCEL_SCALE * np.clip(joystick.axes_values['gb'], -1, 1))
       CC.actuators.steeringAngleDeg = float(TURBO_STEER_ANGLE_SCALE * np.clip(joystick.axes_values['steer'], -1, 1))
       pprint(CC)
