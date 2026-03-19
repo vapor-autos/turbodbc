@@ -1,22 +1,35 @@
 from opendbc.can import CANPacker
 from opendbc.car import Bus
 from opendbc.car.interfaces import CarControllerBase
+from opendbc.car.lateral import apply_std_steer_angle_limits
+from opendbc.car.turbo.values import CarControllerParams
 
 
 class CarController(CarControllerBase):
   def __init__(self, dbc_names, CP):
     super().__init__(dbc_names, CP)
     self.packer = CANPacker(dbc_names[Bus.main])
+    self.apply_angle_last = 0.0
 
   def update(self, CC, CS, now_nanos):
-    new_actuators = CC.actuators
+    actuators = CC.actuators
     can_sends = []
 
     if CC.enabled:
-      steering_val = self.normalize_steer(CC.actuators.torque)
-      can_sends.append(self.packer.make_can_msg("STEER_CMD", 1, {"STEER_ANGLE": steering_val}))
+      self.apply_angle_last = apply_std_steer_angle_limits(
+        actuators.steeringAngleDeg,
+        self.apply_angle_last,
+        CS.out.vEgoRaw,
+        CS.out.steeringAngleDeg,
+        CC.latActive,
+        CarControllerParams.ANGLE_LIMITS,
+      )
 
-      throttle_val = self.normalize_accel(CC.actuators.accel)
+      if self.frame % CarControllerParams.STEER_STEP == 0:
+        steering_val = self.angle_to_servo(self.apply_angle_last)
+        can_sends.append(self.packer.make_can_msg("STEER_CMD", 1, {"STEER_ANGLE": steering_val}))
+
+      throttle_val = self.normalize_accel(actuators.accel)
       can_sends.append(self.packer.make_can_msg("THROTTLE_CMD", 1, {"THROTTLE": throttle_val}))
 
       if CC.leftBlinker:
@@ -24,12 +37,14 @@ class CarController(CarControllerBase):
       elif CC.rightBlinker:
         can_sends.append(self.packer.make_can_msg("TOGGLE_HEADLIGHTS", 1, {"HEADLIGHTS_TOGGLE": 0}))
 
+    new_actuators = actuators
+    new_actuators.steeringAngleDeg = self.apply_angle_last
+    self.frame += 1
+
     return new_actuators, can_sends
 
-  def normalize_accel(self, accel):
-    # Normalize accel from [-4.0, 4.0] to [-100, 100]
-    return int(accel * 25)
+  def angle_to_servo(self, steering_angle_deg):
+    return int(steering_angle_deg * -100.0)
 
-  def normalize_steer(self, steer):
-    # Normalize steer from [-1.0, 1.0] to [60, 120], sign flipped for platform convention
-    return int(90 + steer * -30)
+  def normalize_accel(self, accel):
+    return int(accel * 2500)

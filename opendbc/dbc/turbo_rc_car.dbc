@@ -1,10 +1,19 @@
 VERSION "0.0.01"
 
 BO_ 514 STEER_CMD: 2 XXX
-  SG_ STEER_ANGLE : 0|16@1+ (1,0) [60|120] "degrees" Vector__XXX
+  SG_ STEER_ANGLE : 0|16@1- (1,0) [-18000|18000] "steering wheel angle" Vector__XXX
 
 BO_ 515 THROTTLE_CMD: 2 XXX
-  SG_ THROTTLE : 0|16@1+ (1,0) [0|100] "percent" Vector__XXX
+  SG_ THROTTLE : 0|16@1- (1,0) [-10000|10000] "throttle" Vector__XXX
 
 BO_ 516 TOGGLE_HEADLIGHTS: 2 XXX
-  SG_ HEADLIGHTS_TOGGLE : 0|8@1+ (1,0) [0|1] "" Vector__XXX
+  SG_ HEADLIGHTS_TOGGLE : 0|8@1+ (1,0) [0|1] "boolean" Vector__XXX
+
+BO_ 517 CRUISE_ENABLE: 1 XXX
+  SG_ ENABLE : 0|8@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 520 STEER_16: 2 XXX
+  SG_ STEER_16 : 0|16@1- (1,0) [-18000|18000] "steering angle" Vector__XXX
+
+BO_ 521 SPEED_16: 2 XXX
+  SG_ SPEED_16 : 0|16@1+ (1,0) [0|6000] "centimeters per second" Vector__XXX

@@ -2,19 +2,24 @@ from opendbc.car import Bus, CarSpecs, PlatformConfig, Platforms
 from opendbc.car.structs import CarParams
 from opendbc.car.docs_definitions import CarDocs, SupportType
 from opendbc.car.fw_query_definitions import FwQueryConfig, Request, StdQueries
+from opendbc.car.lateral import AngleSteeringLimits
 
 Ecu = CarParams.Ecu
 
 
 class CarControllerParams:
-  def __init__(self, CP):
-    pass
+  ANGLE_LIMITS: AngleSteeringLimits = AngleSteeringLimits(
+    180,
+    ([0., 5., 25.], [40.0, 24.0, 3.2]),
+    ([0., 5., 25.], [80.0, 32.0, 4.8]),
+  )
+  STEER_STEP = 2
 
 
 class CAR(Platforms):
   TURBO_RC_CAR = PlatformConfig(
     [CarDocs("turbo rc car", package="All", support_type=SupportType.CUSTOM, support_link="#community")],
-    CarSpecs(mass=9, wheelbase=0.406, steerRatio=0.5, centerToFrontRatio=0.44),
+    CarSpecs(mass=9, wheelbase=0.3302, steerRatio=180 / 30 * 3),
     {Bus.main: 'turbo_rc_car'},
   )
 
