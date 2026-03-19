@@ -89,7 +89,7 @@ def main(joystick):
     CC = CarControl(enabled=True)
     while True:
       CC.actuators.accel = float(TURBO_THROTTLE_SCALE * np.clip(joystick.axes_values['gb'], -1, 1))
-      CC.actuators.steeringAngleDeg = float(TURBO_STEER_SCALE * np.clip(joystick.axes_values['steer'], -1, 1))
+      CC.actuators.torque = float(TURBO_STEER_SCALE * np.clip(joystick.axes_values['steer'], -1, 1))
       pprint(CC)
 
       p.read(strict=False)
