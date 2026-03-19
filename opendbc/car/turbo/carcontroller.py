@@ -27,11 +27,9 @@ class CarController(CarControllerBase):
 
       if self.frame % CarControllerParams.STEER_STEP == 0:
         steering_val = self.angle_to_servo(self.apply_angle_last)
-        print(f"[turbo ctrl] cmd_angle_deg={actuators.steeringAngleDeg:.2f} limited_angle_deg={self.apply_angle_last:.2f} raw_steer={steering_val}")
         can_sends.append(self.packer.make_can_msg("STEER_CMD", 1, {"STEER_ANGLE": steering_val}))
 
       throttle_val = self.normalize_accel(actuators.accel)
-      print(f"[turbo ctrl] accel={actuators.accel:.2f} raw_throttle={throttle_val}")
       can_sends.append(self.packer.make_can_msg("THROTTLE_CMD", 1, {"THROTTLE": throttle_val}))
 
       if CC.leftBlinker:

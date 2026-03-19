@@ -15,7 +15,6 @@ class CarState(CarStateBase):
     ret.vEgo = ret.vEgoRaw
     ret.standstill = ret.vEgoRaw < 0.01
     ret.steeringAngleDeg = cp.vl["STEER_16"]["STEER_16"] / -100.0
-    print(f"[turbo state] cruise={ret.cruiseState.enabled} vEgo={ret.vEgoRaw:.2f} raw_steer_fb={cp.vl['STEER_16']['STEER_16']} steer_deg={ret.steeringAngleDeg:.2f}")
     return ret
 
   @staticmethod
