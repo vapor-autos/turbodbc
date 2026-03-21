@@ -3,7 +3,7 @@ from opendbc.car.docs_definitions import CarDocs, SupportType
 from opendbc.car.lateral import AngleSteeringLimits
 
 TYPHON_1_8_3S_SPECS = CarSpecs(
-  mass=9,
+  mass=4.082331133,
   wheelbase=0.3302,
   steerRatio=180 / 30 * 3,
 )
