@@ -10,6 +10,8 @@ Forked from [commaai/opendbc](https://github.com/commaai/opendbc) and extended f
 
 Small car. Real CAN.
 
+[![turbodbc banner](docs/turbo/turbodbc_banner.gif)](docs/turbo/turbodbc_banner.mp4)
+
 ---
 
 ## Turbo RC Car
