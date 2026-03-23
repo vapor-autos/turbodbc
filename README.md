@@ -2,11 +2,11 @@
 
 > Python API for your RC Car
 
-A real `opendbc` interface for rc cars, built around the [Turbo ECU](https://github.com/vapor-autos/ecu).
+A host-side CAN and safety stack for the [Turbo ECU](https://github.com/vapor-autos/ecu) and an RC car pretending to be a real vehicle.
 
-Control steering, throttle, and lights over CAN. Read back speed, steering angle, and ECU state.
+Command steering, throttle, and lights over CAN. Read back speed, steering angle, and ECU state.
 
-Forked from [commaai/opendbc](https://github.com/commaai/opendbc) and extended for experimental RC vehicle support.
+Forked from [commaai/opendbc](https://github.com/commaai/opendbc) for experimental RC support.
 
 Small car. Real CAN.
 
@@ -16,9 +16,15 @@ Small car. Real CAN.
 
 ## Turbo RC Car
 
-Modeled after the [Tesla port](opendbc/car/tesla).
+Loosely modeled after the [Tesla port](opendbc/car/tesla).
 
 Uses an angle-based steering path (`steeringAngleDeg`), not torque-based lateral control.
+
+Port code lives in [`opendbc/car/turbo/`](opendbc/car/turbo/): [`interface.py`](opendbc/car/turbo/interface.py), [`carstate.py`](opendbc/car/turbo/carstate.py), [`carcontroller.py`](opendbc/car/turbo/carcontroller.py), and [`values.py`](opendbc/car/turbo/values.py).
+
+### Supported RC Cars
+
+- [ARRMA Typhon 1/8 3S](docs/turbo/typhon_1_8_3s_reference.md)
 
 ### CAN Interface
 
@@ -30,10 +36,6 @@ Uses an angle-based steering path (`steeringAngleDeg`), not torque-based lateral
 | `0x205` | `CRUISE_ENABLE` | RX | 1 | Control-ready state |
 | `0x208` | `STEER_16` | RX | 2 | Steering feedback |
 | `0x209` | `SPEED_16` | RX | 2 | Vehicle speed feedback |
-
-### Supported RC Cars
-
-- [ARRMA Typhon 1/8 3S](docs/turbo/typhon_1_8_3s_reference.md)
 
 ---
 
