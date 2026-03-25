@@ -22,6 +22,8 @@ Uses an angle-based steering path (`steeringAngleDeg`), not torque-based lateral
 
 Port code lives in [`opendbc/car/turbo/`](opendbc/car/turbo/): [`interface.py`](opendbc/car/turbo/interface.py), [`carstate.py`](opendbc/car/turbo/carstate.py), [`carcontroller.py`](opendbc/car/turbo/carcontroller.py), and [`values.py`](opendbc/car/turbo/values.py).
 
+Firmware query / UDS identification is still TODO. For now, Turbo platform detection relies on passive CAN fingerprinting rather than ECU firmware responses.
+
 ### Supported RC Cars
 
 - [ARRMA Typhon 1/8 3S](docs/turbo/typhon_1_8_3s_reference.md)
