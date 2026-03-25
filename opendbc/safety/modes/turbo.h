@@ -3,7 +3,12 @@
 #include "opendbc/safety/declarations.h"
 
 static void turbo_rx_hook(const CANPacket_t *msg) {
-  if (msg->addr == 0x205U || msg->addr == 0x208U || msg->addr == 0x209U) {
+  const uint32_t addr = msg->addr;
+  const bool is_cruise_msg = (addr == 0x205U);
+  const bool is_steer_msg = (addr == 0x208U);
+  const bool is_speed_msg = (addr == 0x209U);
+
+  if (is_cruise_msg || is_steer_msg || is_speed_msg) {
     controls_allowed = true;
   }
 }
