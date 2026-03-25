@@ -108,7 +108,7 @@ jobs:
       with:
         repository: 'commaai/openpilot'
         ref: 'master'
-        submodules: true
+        submodules: false
     - run: rm -rf opendbc_repo/
     - uses: actions/checkout@v4
       with:
