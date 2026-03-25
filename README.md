@@ -1,50 +1,49 @@
-<div align="center" style="text-align: center;">
+# turbodbc
 
-<h1>opendbc</h1>
-<p>
-  <b>opendbc is a Python API for your car.</b>
-  <br>
-  Control the gas, brake, steering, and more. Read the speed, steering angle, and more.
-</p>
+> Python API for your RC Car
 
-<h3>
-  <a href="https://docs.comma.ai">Docs</a>
-  <span> · </span>
-  <a href="https://github.com/commaai/openpilot/blob/master/docs/CONTRIBUTING.md">Contribute</a>
-  <span> · </span>
-  <a href="https://discord.comma.ai">Discord</a>
-</h3>
+A host-side CAN and safety stack for the [Turbo ECU](https://github.com/vapor-autos/ecu) and an RC car pretending to be a real vehicle.
+
+Command steering, throttle, and lights over CAN. Read back speed, steering angle, and ECU state.
+
+Forked from [commaai/opendbc](https://github.com/commaai/opendbc) for experimental RC support.
+
+Small car. Real CAN.
+
+[![turbodbc banner](docs/turbo/turbodbc_banner.gif)](docs/turbo/turbodbc_banner.mp4)
+
+---
+
+## Turbo RC Car
+
+Loosely modeled after the [Tesla port](opendbc/car/tesla).
+
+Uses an angle-based steering path (`steeringAngleDeg`), not torque-based lateral control.
+
+Port code lives in [`opendbc/car/turbo/`](opendbc/car/turbo/): [`interface.py`](opendbc/car/turbo/interface.py), [`carstate.py`](opendbc/car/turbo/carstate.py), [`carcontroller.py`](opendbc/car/turbo/carcontroller.py), and [`values.py`](opendbc/car/turbo/values.py).
+
+Firmware query / UDS identification is still TODO. For now, Turbo platform detection relies on passive CAN fingerprinting rather than ECU firmware responses.
+
+### Supported RC Cars
+
+- [ARRMA Typhon 1/8 3S](docs/turbo/typhon_1_8_3s_reference.md)
+
+### CAN Interface
+
+| CAN ID | Name | Dir | DLC | Purpose |
+|---|---|---:|---:|---|
+| `0x202` | `STEER_CMD` | TX | 2 | Steering command |
+| `0x203` | `THROTTLE_CMD` | TX | 2 | Throttle command |
+| `0x204` | `TOGGLE_HEADLIGHTS` | TX | 1 | Headlight control |
+| `0x205` | `CRUISE_ENABLE` | RX | 1 | Control-ready state |
+| `0x208` | `STEER_16` | RX | 2 | Steering feedback |
+| `0x209` | `SPEED_16` | RX | 2 | Vehicle speed feedback |
+
+---
+
+[Docs](https://docs.comma.ai) · [Upstream](https://github.com/commaai/opendbc)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![X Follow](https://img.shields.io/twitter/follow/comma_ai)](https://x.com/comma_ai)
-[![Discord](https://img.shields.io/discord/469524606043160576)](https://discord.comma.ai)
-
-<br>
-<h3><i>How to Port a Car — Jason Young, COMMA_CON 2023</i></h3>
-<a href="https://www.youtube.com/watch?v=XxPS5TpTUnI&t=142s">
-  <img src="https://github.com/user-attachments/assets/ae89198e-561b-4210-a0d4-ccecd917577d" alt="▶ How to Port a Car - Jason Young, COMMA_CON 2023" width="800">
-</a>
-<br>
-
-<h3><i>How Do We Control The Car? — Robbe Derks, COMMA_CON 2021</i></h3>
-<a href="https://www.youtube.com/watch?v=nNU6ipme878">
-  <img src="https://github.com/user-attachments/assets/28c40bc0-7884-47e9-b392-f47f03190497" alt="▶ How Do We Control The Car? - Robbe Derks, COMMA_CON 2021" width="800">
-</a>
-<br>
-
-</div>
-
----
-
-Most cars since 2016 have electronically-actuatable steering, gas, and brakes thanks to [LKAS](https://en.wikipedia.org/wiki/Lane_departure_warning_system#Lane_keeping_and_next_technologies) and [ACC](https://en.wikipedia.org/wiki/Adaptive_cruise_control).
-The goal of this project is to support controlling the steering, gas, and brakes on every single one of those cars.
-
-While the primary focus is on supporting ADAS interfaces for [openpilot](https://github.com/commaai/openpilot), we're also interested in reading and writing as many things as we can (EV charge status, lock/unlocking doors, etc) such that we can build the best vehicle management app ever.
-
----
-
-This README and the [supported cars list](docs/CARS.md) are all the docs for the opendbc project.
-Everything you need to know to use, contribute, and extend opendbc are in these docs.
 
 ## Quick start
 
@@ -112,23 +111,6 @@ Use the [longitudinal maneuvers](https://github.com/commaai/openpilot/tree/maste
 ## Contributing
 
 All opendbc development is coordinated on GitHub and [Discord](https://discord.comma.ai). Check out the `#dev-opendbc-cars` channel and `Vehicle Specific` section.
-
-### Roadmap
-
-Short term
-- [ ] `pip install opendbc`
-- [ ] 100% type coverage
-- [ ] 100% line coverage
-- [ ] Make car ports easier: refactors, tools, tests, and docs
-- [ ] Expose the state of all supported cars better: https://github.com/commaai/opendbc/issues/1144
-
-Longer term
-- [ ] Extend support to every car with LKAS + ACC interfaces
-- [ ] Automatic lateral and longitudinal control/tuning evaluation
-- [ ] Auto-tuning for [lateral](https://blog.comma.ai/090release/#torqued-an-auto-tuner-for-lateral-control) and longitudinal control
-- [ ] [Automatic Emergency Braking](https://en.wikipedia.org/wiki/Automated_emergency_braking_system)
-
-Contributions towards anything here are welcome.
 
 ## Safety Model
 
@@ -203,7 +185,3 @@ In addition to the standard bounties, we also offer higher value bounties for mo
 * [can_print_changes.py](https://github.com/commaai/openpilot/blob/master/selfdrive/debug/can_print_changes.py): diff the whole CAN bus across two drives, such as one without any LKAS and one with LKAS
 * [longitudinal maneuvers](https://github.com/commaai/openpilot/tree/master/tools/longitudinal_maneuvers): a tool for evaluating and tuning longitudinal control
 * [opendbc data](https://commaai.github.io/opendbc-data/): a repository of longitudinal maneuver evaluations
-
-## Come work with us -- [comma.ai/jobs](https://comma.ai/jobs)
-
-comma is hiring engineers to work on opendbc and [openpilot](https://github.com/commaai/openpilot). We love hiring contributors.

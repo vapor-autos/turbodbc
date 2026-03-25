@@ -17,7 +17,7 @@ class PandaRunner(AbstractContextManager):
     self.CI = get_car(self._can_recv, self.p.can_send_many, self.p.set_obd, True, False)
     assert self.CI.CP.carFingerprint.lower() != "mock", "Unable to identify car. Check connections and ensure car is supported."
 
-    safety_model = self.CI.CP.safetyConfigs[0].safetyModel
+    safety_model = self.CI.CP.safetyConfigs[0].safetyModel.raw
     self.p.set_safety_mode(CarParams.SafetyModel.elm327, 1)
     self.CI.init(self.CI.CP, self._can_recv, self.p.can_send_many)
     self.p.set_safety_mode(safety_model, self.CI.CP.safetyConfigs[0].safetyParam)
@@ -46,7 +46,7 @@ class PandaRunner(AbstractContextManager):
     return cs
 
   def write(self, cc: CarControl) -> None:
-    if cc.enabled and not self.p.health()['controls_allowed']:
+    if cc.enabled and not self.CI.CP.notCar and not self.p.health()['controls_allowed']:
       # prevent the car from faulting. print a warning?
       cc = CarControl(enabled=False)
     _, can_sends = self.CI.apply(cc)

@@ -364,6 +364,8 @@ class CarDocs:
     else:
       if CP.carFingerprint == "COMMA_BODY":
         return "The body is a robotics dev kit that can run openpilot. <a href='https://www.commabody.com' target='_blank' class='highlight'>Learn more.</a>"
+      elif CP.carFingerprint == "TURBO_RC_CAR":
+        return "Turbo RC car platform for development and testing."
       else:
         raise Exception(f"This notCar does not have a detail sentence: {CP.carFingerprint}")
 

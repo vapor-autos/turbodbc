@@ -60,7 +60,7 @@ class TestCarDocs(unittest.TestCase):
   def test_year_format(self):
     for car in self.all_cars:
       with self.subTest(car=car.name):
-        if car.name == "comma body":
+        if car.name in ("comma body", "turbo rc car"):
           raise unittest.SkipTest
 
         assert car.years and car.year_list, f"Format years correctly: {car.name}"

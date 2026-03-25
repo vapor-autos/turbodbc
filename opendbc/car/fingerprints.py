@@ -10,6 +10,7 @@ from opendbc.car.mock.values import CAR as MOCK
 from opendbc.car.nissan.values import CAR as NISSAN
 from opendbc.car.subaru.values import CAR as SUBARU
 from opendbc.car.toyota.values import CAR as TOYOTA
+from opendbc.car.turbo.values import CAR as TURBO
 from opendbc.car.volkswagen.values import CAR as VW
 
 FW_VERSIONS = get_interface_attr('FW_VERSIONS', combine_brands=True, ignore_none=True)
@@ -123,6 +124,7 @@ MIGRATION = {
 
   # Removal of platform_str, see https://github.com/commaai/openpilot/pull/31868/
   "COMMA BODY": BODY.COMMA_BODY,
+  "TURBO RC CAR": TURBO.TURBO_RC_CAR,
   "CHRYSLER PACIFICA HYBRID 2017": CHRYSLER.CHRYSLER_PACIFICA_2018_HYBRID,
   "CHRYSLER_PACIFICA_2017_HYBRID": CHRYSLER.CHRYSLER_PACIFICA_2018_HYBRID,
   "CHRYSLER PACIFICA HYBRID 2018": CHRYSLER.CHRYSLER_PACIFICA_2018_HYBRID,
