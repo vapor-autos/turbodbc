@@ -37,7 +37,7 @@ class CarController(CarControllerBase):
       elif CC.rightBlinker:
         can_sends.append(self.packer.make_can_msg("TOGGLE_HEADLIGHTS", 1, {"HEADLIGHTS_TOGGLE": 0}))
 
-    new_actuators = actuators
+    new_actuators = actuators.as_builder()
     new_actuators.steeringAngleDeg = self.apply_angle_last
     self.frame += 1
 
