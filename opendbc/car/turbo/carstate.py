@@ -14,7 +14,7 @@ class CarState(CarStateBase):
     ret.vEgoRaw = cp.vl["SPEED_16"]["SPEED_16"] / 100.0
     ret.vEgo = ret.vEgoRaw
     ret.standstill = ret.vEgoRaw < 0.01
-    ret.steeringAngleDeg = cp.vl["STEER_16"]["STEER_16"] / -100.0
+    ret.steeringAngleDeg = cp.vl["STEER_16"]["STEER_16"] / 100.0
     return ret
 
   @staticmethod
