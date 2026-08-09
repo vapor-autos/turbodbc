@@ -22,7 +22,7 @@ class CarInterface(CarInterfaceBase):
     ret.steerAtStandstill = True
 
     ret.radarUnavailable = True
-    ret.openpilotLongitudinalControl = True
+    ret.openpilotLongitudinalControl = False
     ret.steerControlType = structs.CarParams.SteerControlType.angle
 
     return ret
