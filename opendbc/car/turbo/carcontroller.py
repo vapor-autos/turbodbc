@@ -29,8 +29,9 @@ class CarController(CarControllerBase):
         steering_val = self.angle_to_servo(self.apply_angle_last)
         can_sends.append(self.packer.make_can_msg("STEER_CMD", 1, {"STEER_ANGLE": steering_val}))
 
-      throttle_val = self.normalize_accel(actuators.accel)
-      can_sends.append(self.packer.make_can_msg("THROTTLE_CMD", 1, {"THROTTLE": throttle_val}))
+      if CC.longActive:
+        throttle_val = self.normalize_accel(actuators.accel)
+        can_sends.append(self.packer.make_can_msg("THROTTLE_CMD", 1, {"THROTTLE": throttle_val}))
 
       if CC.leftBlinker:
         can_sends.append(self.packer.make_can_msg("TOGGLE_HEADLIGHTS", 1, {"HEADLIGHTS_TOGGLE": 1}))
