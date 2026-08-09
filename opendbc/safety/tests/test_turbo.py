@@ -8,7 +8,7 @@ from opendbc.safety.tests.common import CANPackerSafety
 
 
 class TestTurbo(common.SafetyTest):
-  TX_MSGS = [[0x202, 1], [0x203, 1], [0x204, 1]]
+  TX_MSGS = [[0x202, 1], [0x203, 1], [0x204, 1], [0x205, 1]]
   FWD_BUS_LOOKUP = {}
 
   def setUp(self):
@@ -24,6 +24,10 @@ class TestTurbo(common.SafetyTest):
   def _tx_throttle_msg(self, throttle):
     values = {"THROTTLE": throttle}
     return self.packer.make_can_msg_safety("THROTTLE_CMD", 1, values)
+
+  def _tx_cruise_enable_msg(self, enabled):
+    values = {"ENABLE": 1 if enabled else 0}
+    return self.packer.make_can_msg_safety("CRUISE_ENABLE", 1, values)
 
   def _rx_cruise_enable_msg(self, enabled):
     return common.make_msg(1, 0x205, 1, dat=bytes([1 if enabled else 0]))
@@ -52,9 +56,10 @@ class TestTurbo(common.SafetyTest):
     self.safety.set_controls_allowed(False)
     self.assertTrue(self._tx(self._tx_steer_msg(90)))
     self.assertTrue(self._tx(self._tx_throttle_msg(0)))
+    self.assertTrue(self._tx(self._tx_cruise_enable_msg(True)))
+    self.assertTrue(self._tx(self._tx_cruise_enable_msg(False)))
 
   def test_tx_hook_blocks_non_whitelisted(self):
-    self.assertFalse(self._tx(common.make_msg(1, 0x205, 1)))
     self.assertFalse(self._tx(common.make_msg(1, 0x209, 2)))
 
 
