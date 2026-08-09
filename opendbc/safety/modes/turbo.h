@@ -34,6 +34,7 @@ static safety_config turbo_init(uint16_t param) {
     {0x202, 1, 2, .check_relay = false},  // steer
     {0x203, 1, 2, .check_relay = false},  // throttle
     {0x204, 1, 2, .check_relay = false},  // headlights
+    {0x205, 1, 1, .check_relay = false},  // cruise enable
   };
 
   SAFETY_UNUSED(param);
